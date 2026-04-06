@@ -7,7 +7,7 @@ import {
 } from "recharts";
 import {
   TrendingUp, Calculator, Database, FileSpreadsheet, Mail,
-  ExternalLink, Download, Zap, Target, BookOpen, ArrowUpRight, Activity, DollarSign, GitMerge, Cpu
+  ExternalLink, Download, Zap, Target, BookOpen, ArrowUpRight, Activity, DollarSign, GitMerge, Cpu, Menu, X
 } from "lucide-react";
 
 const BASE = import.meta.env.BASE_URL;
@@ -81,6 +81,41 @@ const Label = ({ icon, text }) => (
 const Heading = ({ children }) => (
   <h2 style={{ fontFamily: F.serif, fontSize: "clamp(1.6rem,3vw,2.6rem)", fontWeight: 300, lineHeight: 1.15, marginBottom: 8, color: C.t1 }}>{children}</h2>
 );
+
+// Scroll-reveal wrapper
+const Reveal = ({ children, delay = 0 }) => {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.1 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return <div ref={ref} style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(24px)", transition: `opacity 0.7s ease ${delay}ms, transform 0.7s ease ${delay}ms` }}>{children}</div>;
+};
+
+// Counting number animation
+const CountUp = ({ end, suffix = "", prefix = "", duration = 2000 }) => {
+  const [val, setVal] = useState(0);
+  const [started, setStarted] = useState(false);
+  const ref = useRef(null);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setStarted(true); }, { threshold: 0.3 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  useEffect(() => {
+    if (!started) return;
+    const num = parseFloat(String(end).replace(/[^0-9.]/g, ""));
+    const steps = 40;
+    const inc = num / steps;
+    let current = 0;
+    const iv = setInterval(() => { current += inc; if (current >= num) { setVal(num); clearInterval(iv); } else setVal(current); }, duration / steps);
+    return () => clearInterval(iv);
+  }, [started, end, duration]);
+  const display = Number.isInteger(parseFloat(end)) ? Math.round(val) : val.toFixed(1);
+  return <span ref={ref}>{prefix}{display}{suffix}</span>;
+};
 
 const SkillBar = ({ name, level, emoji, delay = 0 }) => {
   const [w, setW] = useState(0);
@@ -1420,9 +1455,13 @@ const ArticlesSection = () => {
 export default function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("hero");
+  const [scrollPct, setScrollPct] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const h = () => {
       setScrolled(window.scrollY > 40);
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollPct(docH > 0 ? (window.scrollY / docH) * 100 : 0);
       for (const s of ["contact", "articles", "skills", "interactive", "projects", "experience", "about", "hero"]) {
         const el = document.getElementById(s);
         if (el && window.scrollY >= el.offsetTop - 200) { setActive(s); break; }
@@ -1444,12 +1483,16 @@ export default function Portfolio() {
         @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         @keyframes fadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
         @keyframes gridSlide{0%{background-position:0 0}100%{background-position:60px 60px}}
+        @keyframes cardHover{from{transform:translateY(0);box-shadow:none}to{transform:translateY(-4px);box-shadow:0 8px 30px rgba(200,169,110,0.08)}}
         input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;background:${C.gold};border-radius:50%;cursor:pointer;border:2px solid ${C.bg}}
         ::selection{background:${C.gold};color:${C.bg}}
         *{box-sizing:border-box;margin:0;padding:0}
+        .card-hover{transition:transform 0.3s ease,box-shadow 0.3s ease,border-color 0.3s ease}
+        .card-hover:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(200,169,110,0.08);border-color:rgba(200,169,110,0.2) !important}
         @media(max-width:768px){
           nav{padding:10px 16px !important}
           .nav-links{display:none !important}
+          .mobile-menu-btn{display:block !important}
           section{padding:40px 16px !important}
           .about-grid{grid-template-columns:1fr !important}
           .proj-grid{grid-template-columns:1fr !important}
@@ -1464,7 +1507,8 @@ export default function Portfolio() {
         }
       `}</style>
 
-      <nav style={{ position: "fixed", top: 0, width: "100%", zIndex: 100, padding: scrolled ? "10px 26px" : "16px 26px", display: "flex", justifyContent: "space-between", alignItems: "center", background: scrolled ? "rgba(10,11,13,0.95)" : "rgba(10,11,13,0.5)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.borderS}`, transition: "all 0.4s" }}>
+      <div style={{ position: "fixed", top: 0, left: 0, width: `${scrollPct}%`, height: 2, background: C.gold, zIndex: 200, transition: "width 0.1s" }} />
+      <nav style={{ position: "fixed", top: 2, width: "100%", zIndex: 100, padding: scrolled ? "10px 26px" : "16px 26px", display: "flex", justifyContent: "space-between", alignItems: "center", background: scrolled ? "rgba(10,11,13,0.95)" : "rgba(10,11,13,0.5)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.borderS}`, transition: "all 0.4s" }}>
         <a href="#hero" style={{ fontFamily: F.serif, fontSize: 22, fontWeight: 500, color: C.t1, textDecoration: "none" }}>Harshin Vora</a>
         <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: 24 }}>
           {["About", "Experience", "Projects", "Interactive", "Skills", "Articles"].map(s => (
@@ -1472,7 +1516,13 @@ export default function Portfolio() {
           ))}
           <a href="#contact" style={{ border: `1px solid ${C.gold}`, color: C.gold, padding: "6px 16px", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", textDecoration: "none" }}>Connect</a>
         </div>
+        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ display: "none", background: "none", border: "none", color: C.t1, cursor: "pointer" }}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button>
       </nav>
+      {menuOpen && <div style={{ position: "fixed", inset: 0, zIndex: 99, background: "rgba(10,11,13,0.97)", backdropFilter: "blur(20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 28 }}>
+        {["About", "Experience", "Projects", "Interactive", "Skills", "Articles", "Contact"].map((s, i) => (
+          <a key={s} href={`#${s.toLowerCase()}`} onClick={() => setMenuOpen(false)} style={{ color: active === s.toLowerCase() ? C.gold : C.t1, textDecoration: "none", fontSize: 18, fontWeight: 400, fontFamily: F.serif, letterSpacing: "0.06em", opacity: 0, animation: `fadeIn 0.4s ${i * 60}ms forwards` }}>{s}</a>
+        ))}
+      </div>}
 
       <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "90px 26px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", animation: "gridSlide 20s linear infinite", maskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)" }} />
@@ -1487,8 +1537,8 @@ export default function Portfolio() {
             Senior Financial Analyst with 4+ years in M&A transaction services, financial due diligence, and valuation advisory. I don't just build models — I build the story behind the numbers.
           </p>
           <div style={{ display: "flex", gap: 44, paddingTop: 24, borderTop: `1px solid ${C.border}`, animation: "fadeIn 0.7s 0.8s both", flexWrap: "wrap" }}>
-            {[["$1.3B+", "Deals Supported"], ["40+", "Valuations Built"], ["4+", "Years in Finance"], ["CFA L1", "Candidate"]].map(([v, l]) => (
-              <div key={l}><div style={{ fontFamily: F.serif, fontSize: 32, fontWeight: 300, color: C.gold, lineHeight: 1 }}>{v}</div><div style={{ fontSize: 10, color: C.t3, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 5 }}>{l}</div></div>
+            {[["$1.3B+", "Deals Supported", "$", "1.3", "B+"], ["40+", "Valuations Built", "", "40", "+"], ["4+", "Years in Finance", "", "4", "+"], ["CFA L1", "Candidate", "", "", ""]].map(([v, l, pre, num, suf]) => (
+              <div key={l}><div style={{ fontFamily: F.serif, fontSize: 32, fontWeight: 300, color: C.gold, lineHeight: 1 }}>{num ? <CountUp end={parseFloat(num)} prefix={pre} suffix={suf} /> : v}</div><div style={{ fontSize: 10, color: C.t3, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 5 }}>{l}</div></div>
             ))}
           </div>
         </div>
@@ -1502,8 +1552,8 @@ export default function Portfolio() {
 
         </div>
         <div>
-          <Label icon={<BookOpen size={11} style={{ color: C.gold }} />} text="About" />
-          <Heading>Finance is the language of business decisions</Heading>
+          <Reveal><Label icon={<BookOpen size={11} style={{ color: C.gold }} />} text="About" /></Reveal>
+          <Reveal delay={100}><Heading>Finance is the language of business decisions</Heading></Reveal>
           <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.85, marginBottom: 12 }}>I'm <strong style={{ color: C.t1, fontWeight: 500 }}>Harshin Vora</strong>, a senior financial analyst specializing in M&A transaction services, financial due diligence, and valuation advisory. I transform raw data into insights that drive multi-million dollar decisions.</p>
           <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.85, marginBottom: 12 }}>Experience spans <strong style={{ color: C.t1 }}>buy-side/sell-side due diligence, DCF & comparable valuations, and quality of earnings analysis</strong> for private equity and corporate clients across $20M–$1.3B transactions.</p>
           <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.85, marginBottom: 20 }}>Based in <strong style={{ color: C.t1 }}>San Jose, California</strong> — targeting FP&A, valuation advisory, and strategic finance roles.</p>
@@ -1514,8 +1564,8 @@ export default function Portfolio() {
       </div>)}
 
       {sec("experience", false, <>
-        <Label icon={<TrendingUp size={11} style={{ color: C.gold }} />} text="Experience" />
-        <Heading>Career Timeline</Heading>
+        <Reveal><Label icon={<TrendingUp size={11} style={{ color: C.gold }} />} text="Experience" /></Reveal>
+        <Reveal delay={100}><Heading>Career Timeline</Heading></Reveal>
         <p style={{ color: C.t2, maxWidth: 500, marginBottom: 36, fontSize: 14 }}>From valuation advisory to M&A due diligence to strategic finance.</p>
         <div style={{ position: "relative", paddingLeft: 30 }}>
           <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 1, background: C.border }} />
@@ -1541,7 +1591,7 @@ export default function Portfolio() {
         <Heading>Real companies, real data</Heading>
         <p style={{ color: C.t2, maxWidth: 520, marginBottom: 32, fontSize: 14 }}>Built with public filings from NVIDIA, Meta, Apple, Microsoft & Tesla — live charts, not screenshots.</p>
         <div className="proj-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
-          <div style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22 }}>
+          <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
               <div style={{ fontFamily: F.mono, fontSize: 9, color: C.t3, letterSpacing: "0.12em" }}>01 — NVIDIA DCF VALUATION</div>
               <span style={{ fontFamily: F.mono, fontSize: 9, color: C.green }}>▲ {nvdaDCF.upside}% UPSIDE</span>
@@ -1565,7 +1615,7 @@ export default function Portfolio() {
               ))}
             </div>
           </div>
-          <div style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22 }}>
+          <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
               <div style={{ fontFamily: F.mono, fontSize: 9, color: C.t3, letterSpacing: "0.12em" }}>02 — META FP&A VARIANCE</div>
               <span style={{ fontFamily: F.mono, fontSize: 9, color: C.green }}>{metaFPA.varPct} FAVORABLE</span>
@@ -1584,7 +1634,7 @@ export default function Portfolio() {
           </div>
         </div>
         <div className="proj-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
-          <div style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22 }}>
+          <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
               <div style={{ fontFamily: F.mono, fontSize: 9, color: C.t3, letterSpacing: "0.12em" }}>03 — APPLE CAPITAL ALLOCATION</div>
               <span style={{ fontFamily: F.mono, fontSize: 9, color: C.gold }}>FY2024 10-K</span>
@@ -1629,16 +1679,16 @@ export default function Portfolio() {
       </>)}
 
       {sec("skills", true, <>
-        <Label icon={<Database size={11} style={{ color: C.gold }} />} text="Toolkit" />
-        <Heading>Technical arsenal</Heading>
+        <Reveal><Label icon={<Database size={11} style={{ color: C.gold }} />} text="Toolkit" /></Reveal>
+        <Reveal delay={100}><Heading>Technical arsenal</Heading></Reveal>
         <p style={{ color: C.t2, maxWidth: 500, marginBottom: 32, fontSize: 14 }}>Proficiency based on years of professional use.</p>
         <div className="skills-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, alignItems: "start" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
+            <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
               <div style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16, paddingBottom: 10, borderBottom: `1px solid ${C.borderS}` }}>Tools & Platforms</div>
               <SkillBar name="Excel / VBA" level={98} emoji="📊" /><SkillBar name="Power BI / Tableau" level={88} emoji="📈" delay={80} /><SkillBar name="SQL" level={82} emoji="🗄️" delay={160} /><SkillBar name="SAP / D365 / OneStream" level={80} emoji="⚙️" delay={240} /><SkillBar name="Bloomberg / Capital IQ" level={88} emoji="💹" delay={320} /><SkillBar name="PitchBook / FactSet" level={84} emoji="🔍" delay={400} />
             </div>
-            <div style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
+            <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
               <div style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Competency Radar</div>
               <div style={{ height: 250 }}>
                 <ResponsiveContainer width="100%" height="100%">
@@ -1648,7 +1698,7 @@ export default function Portfolio() {
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            <div style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
+            <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
               <div style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 14, paddingBottom: 10, borderBottom: `1px solid ${C.borderS}` }}>Education & Certifications</div>
               {[["CFA Level 1", "CFA Institute", "Pursuing"], ["M.S. Finance (STEM)", "University of Illinois Urbana-Champaign", "Dec 2024"], ["Chartered Accountant", "ICAI (US CPA Equivalent)", "Nov 2019"], ["B.Com Accounting & Finance", "University of Mumbai", "Apr 2018"]].map(([n, iss, st], idx, arr) => (
                 <div key={n} style={{ padding: "12px 0", borderBottom: idx < arr.length - 1 ? `1px solid ${C.borderS}` : "none", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -1657,7 +1707,7 @@ export default function Portfolio() {
                 </div>
               ))}
             </div>
-            <div style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
+            <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22, flex: 1 }}>
               <div style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 16, paddingBottom: 10, borderBottom: `1px solid ${C.borderS}` }}>ERP & Reporting</div>
               <SkillBar name="Anaplan / NetSuite" level={82} emoji="📊" /><SkillBar name="Python Scripts" level={72} emoji="⚡" delay={80} /><SkillBar name="Power Automate" level={80} emoji="🔁" delay={160} /><SkillBar name="QuickBooks / Tally" level={78} emoji="📝" delay={240} /><SkillBar name="Morningstar / FactSet" level={76} emoji="📉" delay={320} />
             </div>
