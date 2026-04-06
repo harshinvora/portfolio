@@ -1478,7 +1478,7 @@ export default function Portfolio() {
       setParallax(window.scrollY * 0.3);
       const docH = document.documentElement.scrollHeight - window.innerHeight;
       setScrollPct(docH > 0 ? (window.scrollY / docH) * 100 : 0);
-      for (const s of ["contact", "articles", "skills", "interactive", "projects", "experience", "about", "hero"]) {
+      for (const s of ["contact", "articles", "skills", "interactive", "projects", "experience", "hero"]) {
         const el = document.getElementById(s);
         if (el && window.scrollY >= el.offsetTop - 200) { setActive(s); break; }
       }
@@ -1539,7 +1539,7 @@ export default function Portfolio() {
       <nav style={{ position: "fixed", top: 2, width: "100%", zIndex: 100, padding: scrolled ? "10px 26px" : "16px 26px", display: "flex", justifyContent: "space-between", alignItems: "center", background: scrolled ? "rgba(10,11,13,0.95)" : "rgba(10,11,13,0.5)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.borderS}`, transition: "all 0.4s" }}>
         <a href="#hero" style={{ fontFamily: F.serif, fontSize: 22, fontWeight: 500, color: C.t1, textDecoration: "none" }}>Harshin Vora</a>
         <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          {["About", "Experience", "Projects", "Interactive", "Skills", "Articles"].map(s => (
+          {["Experience", "Projects", "Interactive", "Skills", "Articles"].map(s => (
             <a key={s} href={`#${s.toLowerCase()}`} style={{ color: active === s.toLowerCase() ? C.gold : C.t2, textDecoration: "none", fontSize: 11, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", transition: "color 0.3s" }}>{s}</a>
           ))}
           <a href="#contact" style={{ border: `1px solid ${C.gold}`, color: C.gold, padding: "6px 16px", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", textDecoration: "none" }}>Connect</a>
@@ -1547,7 +1547,7 @@ export default function Portfolio() {
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ display: "none", background: "none", border: "none", color: C.t1, cursor: "pointer" }}>{menuOpen ? <X size={20} /> : <Menu size={20} />}</button>
       </nav>
       {menuOpen && <div style={{ position: "fixed", inset: 0, zIndex: 99, background: "rgba(10,11,13,0.97)", backdropFilter: "blur(20px)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 28 }}>
-        {["About", "Experience", "Projects", "Interactive", "Skills", "Articles", "Contact"].map((s, i) => (
+        {["Experience", "Projects", "Interactive", "Skills", "Articles", "Contact"].map((s, i) => (
           <a key={s} href={`#${s.toLowerCase()}`} onClick={() => setMenuOpen(false)} style={{ color: active === s.toLowerCase() ? C.gold : C.t1, textDecoration: "none", fontSize: 18, fontWeight: 400, fontFamily: F.serif, letterSpacing: "0.06em", opacity: 0, animation: `fadeIn 0.4s ${i * 60}ms forwards` }}>{s}</a>
         ))}
       </div>}
@@ -1555,42 +1555,33 @@ export default function Portfolio() {
       <section id="hero" onMouseMove={e => setMouse({ x: e.clientX, y: e.clientY })} style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "90px 26px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", animation: "gridSlide 20s linear infinite", maskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", transform: `translateY(${parallax}px)`, willChange: "transform" }} />
         <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%)", left: mouse.x - 200, top: mouse.y - 200, pointerEvents: "none", transition: "left 0.3s ease-out, top 0.3s ease-out", zIndex: 1 }} />
-        <div style={{ position: "relative", zIndex: 2, maxWidth: 820 }}>
-          <div style={{ fontFamily: F.mono, fontSize: 11, color: C.gold, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 18, animation: "fadeIn 0.7s 0.2s both", display: "flex", alignItems: "center", gap: 10 }}>
-            <div style={{ width: 36, height: 1, background: C.gold }} /> Senior Financial Analyst
+        <div className="about-grid" style={{ position: "relative", zIndex: 2, maxWidth: 1040, margin: "0 auto", display: "grid", gridTemplateColumns: "240px 1fr", gap: 44, alignItems: "center" }}>
+          <div style={{ aspectRatio: "3/4", background: `linear-gradient(135deg, ${C.card}, ${C.bg})`, border: `1px solid ${C.border}`, overflow: "hidden", animation: "fadeIn 0.7s 0.2s both" }}>
+            <img src={`${BASE}harshin.jpg`} alt="Harshin Vora" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
           </div>
-          <h1 style={{ fontFamily: F.serif, fontSize: "clamp(2.6rem,5vw,4.5rem)", fontWeight: 300, lineHeight: 1.08, letterSpacing: "-0.02em", marginBottom: 22, animation: "fadeIn 0.7s 0.4s both" }}>
-            Turning complex data<br />into <em style={{ fontStyle: "italic", color: C.gold, fontWeight: 400 }}>strategic clarity</em>
-          </h1>
-          <p style={{ fontSize: 15, color: C.t2, maxWidth: 500, lineHeight: 1.8, marginBottom: 32, animation: "fadeIn 0.7s 0.6s both" }}>
-            Senior Financial Analyst with 4+ years in M&A transaction services, financial due diligence, and valuation advisory. I don't just build models — I build the story behind the numbers.
-          </p>
-          <div style={{ display: "flex", gap: 44, paddingTop: 24, borderTop: `1px solid ${C.border}`, animation: "fadeIn 0.7s 0.8s both", flexWrap: "wrap" }}>
-            {[["$1.3B+", "Deals Supported", "$", "1.3", "B+"], ["40+", "Valuations Built", "", "40", "+"], ["4+", "Years in Finance", "", "4", "+"], ["CFA L1", "Candidate", "", "", ""]].map(([v, l, pre, num, suf]) => (
-              <div key={l}><div style={{ fontFamily: F.serif, fontSize: 32, fontWeight: 300, color: C.gold, lineHeight: 1 }}>{num ? <CountUp end={parseFloat(num)} prefix={pre} suffix={suf} /> : v}</div><div style={{ fontSize: 10, color: C.t3, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 5 }}>{l}</div></div>
-            ))}
+          <div>
+            <div style={{ fontFamily: F.mono, fontSize: 11, color: C.gold, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 14, animation: "fadeIn 0.7s 0.2s both", display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 36, height: 1, background: C.gold }} /> Senior Financial Analyst
+            </div>
+            <h1 style={{ fontFamily: F.serif, fontSize: "clamp(2.2rem,4vw,3.8rem)", fontWeight: 300, lineHeight: 1.08, letterSpacing: "-0.02em", marginBottom: 16, animation: "fadeIn 0.7s 0.4s both" }}>
+              Turning complex data<br />into <em style={{ fontStyle: "italic", color: C.gold, fontWeight: 400 }}>strategic clarity</em>
+            </h1>
+            <p style={{ fontSize: 14, color: C.t2, maxWidth: 500, lineHeight: 1.8, marginBottom: 14, animation: "fadeIn 0.7s 0.6s both" }}>
+              4+ years in M&A transaction services, financial due diligence, and valuation advisory for PE and corporate clients across $20M–$1.3B transactions. Based in San Jose, CA.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20, animation: "fadeIn 0.7s 0.7s both" }}>
+              {["M&A Due Diligence", "FP&A", "DCF Valuation", "Quality of Earnings", "3-Statement Modeling", "GAAP", "CFA L1", "CA (India)"].map(t => <span key={t} style={{ padding: "4px 10px", border: `1px solid ${C.border}`, fontSize: 9, color: C.t2, letterSpacing: "0.06em", textTransform: "uppercase" }}>{t}</span>)}
+            </div>
+            <div style={{ display: "flex", gap: 36, paddingTop: 18, borderTop: `1px solid ${C.border}`, animation: "fadeIn 0.7s 0.8s both", flexWrap: "wrap" }}>
+              {[["$1.3B+", "Deals Supported", "$", "1.3", "B+"], ["40+", "Valuations Built", "", "40", "+"], ["4+", "Years in Finance", "", "4", "+"], ["CFA L1", "Candidate", "", "", ""]].map(([v, l, pre, num, suf]) => (
+                <div key={l}><div style={{ fontFamily: F.serif, fontSize: 28, fontWeight: 300, color: C.gold, lineHeight: 1 }}>{num ? <CountUp end={parseFloat(num)} prefix={pre} suffix={suf} /> : v}</div><div style={{ fontSize: 9, color: C.t3, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 4 }}>{l}</div></div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       <Ticker />
-
-      {sec("about", true, <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "260px 1fr", gap: 44, alignItems: "start" }}>
-        <div style={{ aspectRatio: "3/4", background: `linear-gradient(135deg, ${C.card}, ${C.bg})`, border: `1px solid ${C.border}`, overflow: "hidden", position: "relative" }}>
-          <img src={`${BASE}harshin.jpg`} alt="Harshin Vora" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-
-        </div>
-        <div>
-          <Reveal><Label icon={<BookOpen size={11} style={{ color: C.gold }} />} text="About" /></Reveal>
-          <Reveal delay={100}><Heading>Finance is the language of business decisions</Heading></Reveal>
-          <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.85, marginBottom: 12 }}>I'm <strong style={{ color: C.t1, fontWeight: 500 }}>Harshin Vora</strong>, a senior financial analyst specializing in M&A transaction services, financial due diligence, and valuation advisory. I transform raw data into insights that drive multi-million dollar decisions.</p>
-          <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.85, marginBottom: 12 }}>Experience spans <strong style={{ color: C.t1 }}>buy-side/sell-side due diligence, DCF & comparable valuations, and quality of earnings analysis</strong> for private equity and corporate clients across $20M–$1.3B transactions.</p>
-          <p style={{ color: C.t2, fontSize: 14, lineHeight: 1.85, marginBottom: 20 }}>Based in <strong style={{ color: C.t1 }}>San Jose, California</strong> — targeting FP&A, valuation advisory, and strategic finance roles.</p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
-            {["M&A Due Diligence", "FP&A", "DCF Valuation", "Quality of Earnings", "3-Statement Modeling", "GAAP", "CFA L1", "CA (India)"].map(t => <span key={t} style={{ padding: "5px 12px", border: `1px solid ${C.border}`, fontSize: 10, color: C.t2, letterSpacing: "0.06em", textTransform: "uppercase" }}>{t}</span>)}
-          </div>
-        </div>
-      </div>)}
 
       {sec("experience", false, <>
         <Reveal><Label icon={<TrendingUp size={11} style={{ color: C.gold }} />} text="Experience" /></Reveal>
