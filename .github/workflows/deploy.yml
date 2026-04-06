@@ -21,8 +21,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-      - run: npm ci
+      - run: npm install --legacy-peer-deps
       - name: Set env
         run: echo "VITE_FMP_KEY=${{ secrets.VITE_FMP_KEY }}" >> $GITHUB_ENV
       - run: npm run build
