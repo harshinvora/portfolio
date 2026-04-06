@@ -933,7 +933,7 @@ const DCFCalc = () => {
                 <XAxis dataKey="yr" tick={{ fill: C.t3, fontSize: 9, fontFamily: F.mono }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fill: C.t3, fontSize: 9, fontFamily: F.mono }} axisLine={false} tickLine={false} />
                 <Tooltip content={<Tip />} />
-                <Bar dataKey="pv" fill={C.gold} radius={[2, 2, 0, 0]} name="PV of FCF" />
+                <Bar dataKey="pv" fill={C.gold} radius={[2, 2, 0, 0]} name="PV of FCF" animationDuration={1200} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -1457,6 +1457,9 @@ export default function Portfolio() {
   const [active, setActive] = useState("hero");
   const [scrollPct, setScrollPct] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setLoaded(true), 1400); return () => clearTimeout(t); }, []);
   useEffect(() => {
     const h = () => {
       setScrolled(window.scrollY > 40);
@@ -1489,6 +1492,9 @@ export default function Portfolio() {
         *{box-sizing:border-box;margin:0;padding:0}
         .card-hover{transition:transform 0.3s ease,box-shadow 0.3s ease,border-color 0.3s ease}
         .card-hover:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(200,169,110,0.08);border-color:rgba(200,169,110,0.2) !important}
+        .loader{position:fixed;inset:0;z-index:9999;background:#0a0b0d;display:flex;align-items:center;justify-content:center;transition:opacity 0.6s,visibility 0.6s}
+        .loader.done{opacity:0;visibility:hidden;pointer-events:none}
+        .loader-text{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:${C.gold};opacity:0;animation:fadeIn 0.6s 0.2s forwards}
         @media(max-width:768px){
           nav{padding:10px 16px !important}
           .nav-links{display:none !important}
@@ -1507,7 +1513,8 @@ export default function Portfolio() {
         }
       `}</style>
 
-      <div style={{ position: "fixed", top: 0, left: 0, width: `${scrollPct}%`, height: 2, background: C.gold, zIndex: 200, transition: "width 0.1s" }} />
+      <div className={`loader ${loaded ? "done" : ""}`}><span className="loader-text">HV</span></div>
+      <div style={{ position: "fixed", top: 0, left: 0, width: `${scrollPct}%`, height: 2, background: `linear-gradient(90deg, ${C.gold}, #e8d5a8)`, zIndex: 200, transition: "width 0.1s" }} />
       <nav style={{ position: "fixed", top: 2, width: "100%", zIndex: 100, padding: scrolled ? "10px 26px" : "16px 26px", display: "flex", justifyContent: "space-between", alignItems: "center", background: scrolled ? "rgba(10,11,13,0.95)" : "rgba(10,11,13,0.5)", backdropFilter: "blur(20px)", borderBottom: `1px solid ${C.borderS}`, transition: "all 0.4s" }}>
         <a href="#hero" style={{ fontFamily: F.serif, fontSize: 22, fontWeight: 500, color: C.t1, textDecoration: "none" }}>Harshin Vora</a>
         <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: 24 }}>
@@ -1524,8 +1531,9 @@ export default function Portfolio() {
         ))}
       </div>}
 
-      <section id="hero" style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "90px 26px 50px", position: "relative", overflow: "hidden" }}>
+      <section id="hero" onMouseMove={e => setMouse({ x: e.clientX, y: e.clientY })} style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "90px 26px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", animation: "gridSlide 20s linear infinite", maskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)" }} />
+        <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%)", left: mouse.x - 200, top: mouse.y - 200, pointerEvents: "none", transition: "left 0.3s ease-out, top 0.3s ease-out", zIndex: 1 }} />
         <div style={{ position: "relative", zIndex: 2, maxWidth: 820 }}>
           <div style={{ fontFamily: F.mono, fontSize: 11, color: C.gold, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 18, animation: "fadeIn 0.7s 0.2s both", display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 36, height: 1, background: C.gold }} /> Senior Financial Analyst
@@ -1601,8 +1609,8 @@ export default function Portfolio() {
                 <AreaChart data={nvidiaRevenue}>
                   <defs><linearGradient id="rg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={C.gold} stopOpacity={0.25} /><stop offset="100%" stopColor={C.gold} stopOpacity={0} /></linearGradient></defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" /><XAxis dataKey="year" tick={{ fill: C.t3, fontSize: 9, fontFamily: F.mono }} axisLine={false} tickLine={false} /><YAxis tick={{ fill: C.t3, fontSize: 9, fontFamily: F.mono }} axisLine={false} tickLine={false} unit="B" /><Tooltip content={<Tip />} />
-                  <Area type="monotone" dataKey="actual" stroke={C.gold} fill="url(#rg)" strokeWidth={2} dot={{ fill: C.gold, r: 3 }} name="Actual Rev" />
-                  <Area type="monotone" dataKey="forecast" stroke={C.gold} fill="url(#rg)" strokeWidth={2} strokeDasharray="5 5" dot={{ fill: C.gold, r: 3, strokeDasharray: "0" }} name="Forecast Rev" />
+                  <Area type="monotone" dataKey="actual" stroke={C.gold} fill="url(#rg)" strokeWidth={2} dot={{ fill: C.gold, r: 3 }} name="Actual Rev" animationDuration={1500} />
+                  <Area type="monotone" dataKey="forecast" stroke={C.gold} fill="url(#rg)" strokeWidth={2} strokeDasharray="5 5" dot={{ fill: C.gold, r: 3, strokeDasharray: "0" }} name="Forecast Rev" animationDuration={1500} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
@@ -1641,7 +1649,7 @@ export default function Portfolio() {
             </div>
             <div style={{ height: 150 }}>
               <ResponsiveContainer width="100%" height="100%">
-                <PieChart><Pie data={appleCapAlloc} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={3} dataKey="value" stroke="none">{appleCapAlloc.map((e, i) => <Cell key={i} fill={e.color} />)}</Pie></PieChart>
+                <PieChart><Pie data={appleCapAlloc} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={3} dataKey="value" animationDuration={1200} animationBegin={200} stroke="none">{appleCapAlloc.map((e, i) => <Cell key={i} fill={e.color} />)}</Pie></PieChart>
               </ResponsiveContainer>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 8, marginTop: 4 }}>
@@ -1692,7 +1700,7 @@ export default function Portfolio() {
               <div style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 12 }}>Competency Radar</div>
               <div style={{ height: 250 }}>
                 <ResponsiveContainer width="100%" height="100%">
-                  <RadarChart data={radarData}><PolarGrid stroke="rgba(200,169,110,0.1)" /><PolarAngleAxis dataKey="s" tick={{ fill: C.t2, fontSize: 9, fontFamily: F.mono }} /><PolarRadiusAxis tick={false} axisLine={false} domain={[0, 100]} /><Radar dataKey="v" stroke={C.gold} fill={C.gold} fillOpacity={0.15} strokeWidth={1.5} /></RadarChart>
+                  <RadarChart data={radarData}><PolarGrid stroke="rgba(200,169,110,0.1)" /><PolarAngleAxis dataKey="s" tick={{ fill: C.t2, fontSize: 9, fontFamily: F.mono }} /><PolarRadiusAxis tick={false} axisLine={false} domain={[0, 100]} /><Radar dataKey="v" stroke={C.gold} fill={C.gold} fillOpacity={0.15} strokeWidth={1.5} animationDuration={1500} /></RadarChart>
                 </ResponsiveContainer>
               </div>
             </div>
