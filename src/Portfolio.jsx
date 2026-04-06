@@ -1570,9 +1570,15 @@ export default function Portfolio() {
               I'm <strong style={{ color: C.t1, fontWeight: 500 }}>Harshin Vora</strong> — a senior financial analyst specializing in M&A transaction services, financial due diligence, and valuation advisory. I transform raw data into insights that drive multi-million dollar decisions.
             </p>
             <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 10, animation: "fadeIn 0.7s 0.65s both" }}>
-              Experience spans <strong style={{ color: C.t1 }}>buy-side/sell-side due diligence, DCF & comparable valuations, and quality of earnings analysis</strong> for private equity and corporate clients across $20M–$1.3B transactions.
+              Experience spans <strong style={{ color: C.t1 }}>buy-side/sell-side due diligence, DCF & comparable valuations, and quality of earnings analysis</strong> for private equity and corporate clients across $20M–$1.3B transactions. Led due diligence for a <strong style={{ color: C.t1 }}>$1.3B insurance IPO</strong> and built DCF models for <strong style={{ color: C.t1 }}>$200M+ PE investments</strong>.
             </p>
-            <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 18, animation: "fadeIn 0.7s 0.7s both" }}>
+            <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 10, animation: "fadeIn 0.7s 0.7s both" }}>
+              Technical toolkit includes <strong style={{ color: C.t1 }}>integrated 3-statement modeling, sensitivity analysis, WACC calculations, and synergy assessments</strong>. Proficient in Excel/VBA, SQL, Tableau, Power BI, SAP, Bloomberg Terminal, and Capital IQ.
+            </p>
+            <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 10, animation: "fadeIn 0.7s 0.75s both" }}>
+              <strong style={{ color: C.t1 }}>M.S. Finance (STEM)</strong> from University of Illinois Urbana-Champaign. <strong style={{ color: C.t1 }}>Chartered Accountant</strong> (ICAI, US CPA equivalent). Currently pursuing <strong style={{ color: C.t1 }}>CFA Level 1</strong>.
+            </p>
+            <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 18, animation: "fadeIn 0.7s 0.8s both" }}>
               Based in <strong style={{ color: C.t1 }}>San Jose, California</strong> — targeting FP&A, valuation advisory, and strategic finance roles.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 22, animation: "fadeIn 0.7s 0.75s both" }}>
