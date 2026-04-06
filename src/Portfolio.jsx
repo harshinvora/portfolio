@@ -1555,26 +1555,32 @@ export default function Portfolio() {
       <section id="hero" onMouseMove={e => setMouse({ x: e.clientX, y: e.clientY })} style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "90px 26px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", animation: "gridSlide 20s linear infinite", maskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", transform: `translateY(${parallax}px)`, willChange: "transform" }} />
         <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%)", left: mouse.x - 200, top: mouse.y - 200, pointerEvents: "none", transition: "left 0.3s ease-out, top 0.3s ease-out", zIndex: 1 }} />
-        <div className="about-grid" style={{ position: "relative", zIndex: 2, maxWidth: 1040, margin: "0 auto", display: "grid", gridTemplateColumns: "240px 1fr", gap: 44, alignItems: "center" }}>
+        <div className="about-grid" style={{ position: "relative", zIndex: 2, maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "280px 1fr", gap: 50, alignItems: "center" }}>
           <div style={{ aspectRatio: "3/4", background: `linear-gradient(135deg, ${C.card}, ${C.bg})`, border: `1px solid ${C.border}`, overflow: "hidden", animation: "fadeIn 0.7s 0.2s both" }}>
             <img src={`${BASE}harshin.jpg`} alt="Harshin Vora" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
           </div>
           <div>
-            <div style={{ fontFamily: F.mono, fontSize: 11, color: C.gold, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 14, animation: "fadeIn 0.7s 0.2s both", display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ fontFamily: F.mono, fontSize: 12, color: C.gold, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 16, animation: "fadeIn 0.7s 0.2s both", display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 36, height: 1, background: C.gold }} /> Senior Financial Analyst
             </div>
-            <h1 style={{ fontFamily: F.serif, fontSize: "clamp(2.2rem,4vw,3.8rem)", fontWeight: 300, lineHeight: 1.08, letterSpacing: "-0.02em", marginBottom: 16, animation: "fadeIn 0.7s 0.4s both" }}>
+            <h1 style={{ fontFamily: F.serif, fontSize: "clamp(2.4rem,4.5vw,4.2rem)", fontWeight: 300, lineHeight: 1.08, letterSpacing: "-0.02em", marginBottom: 18, animation: "fadeIn 0.7s 0.4s both" }}>
               Turning complex data<br />into <em style={{ fontStyle: "italic", color: C.gold, fontWeight: 400 }}>strategic clarity</em>
             </h1>
-            <p style={{ fontSize: 14, color: C.t2, maxWidth: 500, lineHeight: 1.8, marginBottom: 14, animation: "fadeIn 0.7s 0.6s both" }}>
-              4+ years in M&A transaction services, financial due diligence, and valuation advisory for PE and corporate clients across $20M–$1.3B transactions. Based in San Jose, CA.
+            <p style={{ fontSize: 15, color: C.t2, maxWidth: 540, lineHeight: 1.85, marginBottom: 10, animation: "fadeIn 0.7s 0.6s both" }}>
+              I'm <strong style={{ color: C.t1, fontWeight: 500 }}>Harshin Vora</strong> — a senior financial analyst specializing in M&A transaction services, financial due diligence, and valuation advisory. I transform raw data into insights that drive multi-million dollar decisions.
             </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 20, animation: "fadeIn 0.7s 0.7s both" }}>
-              {["M&A Due Diligence", "FP&A", "DCF Valuation", "Quality of Earnings", "3-Statement Modeling", "GAAP", "CFA L1", "CA (India)"].map(t => <span key={t} style={{ padding: "4px 10px", border: `1px solid ${C.border}`, fontSize: 9, color: C.t2, letterSpacing: "0.06em", textTransform: "uppercase" }}>{t}</span>)}
+            <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 10, animation: "fadeIn 0.7s 0.65s both" }}>
+              Experience spans <strong style={{ color: C.t1 }}>buy-side/sell-side due diligence, DCF & comparable valuations, and quality of earnings analysis</strong> for private equity and corporate clients across $20M–$1.3B transactions.
+            </p>
+            <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 18, animation: "fadeIn 0.7s 0.7s both" }}>
+              Based in <strong style={{ color: C.t1 }}>San Jose, California</strong> — targeting FP&A, valuation advisory, and strategic finance roles.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 22, animation: "fadeIn 0.7s 0.75s both" }}>
+              {["M&A Due Diligence", "FP&A", "DCF Valuation", "Quality of Earnings", "3-Statement Modeling", "GAAP", "CFA L1", "CA (India)"].map(t => <span key={t} style={{ padding: "5px 12px", border: `1px solid ${C.border}`, fontSize: 10, color: C.t2, letterSpacing: "0.06em", textTransform: "uppercase" }}>{t}</span>)}
             </div>
-            <div style={{ display: "flex", gap: 36, paddingTop: 18, borderTop: `1px solid ${C.border}`, animation: "fadeIn 0.7s 0.8s both", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: 40, paddingTop: 20, borderTop: `1px solid ${C.border}`, animation: "fadeIn 0.7s 0.85s both", flexWrap: "wrap" }}>
               {[["$1.3B+", "Deals Supported", "$", "1.3", "B+"], ["40+", "Valuations Built", "", "40", "+"], ["4+", "Years in Finance", "", "4", "+"], ["CFA L1", "Candidate", "", "", ""]].map(([v, l, pre, num, suf]) => (
-                <div key={l}><div style={{ fontFamily: F.serif, fontSize: 28, fontWeight: 300, color: C.gold, lineHeight: 1 }}>{num ? <CountUp end={parseFloat(num)} prefix={pre} suffix={suf} /> : v}</div><div style={{ fontSize: 9, color: C.t3, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 4 }}>{l}</div></div>
+                <div key={l}><div style={{ fontFamily: F.serif, fontSize: 32, fontWeight: 300, color: C.gold, lineHeight: 1 }}>{num ? <CountUp end={parseFloat(num)} prefix={pre} suffix={suf} /> : v}</div><div style={{ fontSize: 10, color: C.t3, letterSpacing: "0.14em", textTransform: "uppercase", marginTop: 5 }}>{l}</div></div>
               ))}
             </div>
           </div>
