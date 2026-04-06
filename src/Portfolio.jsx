@@ -1567,7 +1567,7 @@ export default function Portfolio() {
               Turning complex data<br />into <em style={{ fontStyle: "italic", color: C.gold, fontWeight: 400 }}>strategic clarity</em>
             </h1>
             <p style={{ fontSize: 15, color: C.t2, maxWidth: 540, lineHeight: 1.85, marginBottom: 10, animation: "fadeIn 0.7s 0.6s both" }}>
-              I'm <strong style={{ color: C.t1, fontWeight: 500 }}>Harshin Vora</strong> — a senior financial analyst specializing in M&A transaction services, financial due diligence, and valuation advisory. I transform raw data into insights that drive multi-million dollar decisions.
+              I'm <strong style={{ color: C.t1, fontWeight: 500 }}>Harshin Vora</strong>, a senior financial analyst specializing in M&A transaction services, financial due diligence, and valuation advisory. I transform raw data into insights that drive multi-million dollar decisions.
             </p>
             <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 10, animation: "fadeIn 0.7s 0.65s both" }}>
               Experience spans <strong style={{ color: C.t1 }}>buy-side/sell-side due diligence, DCF & comparable valuations, and quality of earnings analysis</strong> for private equity and corporate clients across $20M–$1.3B transactions. Led due diligence for a <strong style={{ color: C.t1 }}>$1.3B insurance IPO</strong> and built DCF models for <strong style={{ color: C.t1 }}>$200M+ PE investments</strong>.
@@ -1579,7 +1579,7 @@ export default function Portfolio() {
               <strong style={{ color: C.t1 }}>M.S. Finance (STEM)</strong> from University of Illinois Urbana-Champaign. <strong style={{ color: C.t1 }}>Chartered Accountant</strong> (ICAI, US CPA equivalent). Currently pursuing <strong style={{ color: C.t1 }}>CFA Level 1</strong>.
             </p>
             <p style={{ fontSize: 14, color: C.t2, maxWidth: 540, lineHeight: 1.8, marginBottom: 18, animation: "fadeIn 0.7s 0.8s both" }}>
-              Based in <strong style={{ color: C.t1 }}>San Jose, California</strong> — targeting FP&A, valuation advisory, and strategic finance roles.
+              Based in <strong style={{ color: C.t1 }}>San Jose, California</strong>. Targeting FP&A, valuation advisory, and strategic finance roles.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 7, marginBottom: 22, animation: "fadeIn 0.7s 0.75s both" }}>
               {["M&A Due Diligence", "FP&A", "DCF Valuation", "Quality of Earnings", "3-Statement Modeling", "GAAP", "CFA L1", "CA (India)"].map(t => <span key={t} style={{ padding: "5px 12px", border: `1px solid ${C.border}`, fontSize: 10, color: C.t2, letterSpacing: "0.06em", textTransform: "uppercase" }}>{t}</span>)}
