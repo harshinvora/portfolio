@@ -10,6 +10,7 @@ import {
   ExternalLink, Download, Zap, Target, BookOpen, ArrowUpRight, Activity, DollarSign, GitMerge, Cpu
 } from "lucide-react";
 
+const BASE = import.meta.env.BASE_URL;
 const C = {
   bg: "#0a0b0d", bg2: "#111318", card: "#161820", cardH: "#1c1f2a",
   gold: "#c8a96e", goldDim: "rgba(200,169,110,0.15)", goldGlow: "rgba(200,169,110,0.06)",
@@ -1246,7 +1247,7 @@ const Ticker = () => {
 
 const articlesData = [
   { tag: "CASE STUDY", tagColor: C.gold, date: "Jan 2026", read: "10 min",
-    img: "/articles/nvidia-dcf.jpg", title: "How NVIDIA Became a $3T Company: A DCF Breakdown",
+    img: `${BASE}articles/nvidia-dcf.jpg`, title: "How NVIDIA Became a $3T Company: A DCF Breakdown",
     preview: "NVIDIA's revenue hit $130.5B in FY2025, up 114% YoY. Most people see AI hype. But when you build the DCF, the fundamentals largely support it. Here's the full breakdown.",
     body: [
       "In January 2023, NVIDIA was worth about $360 billion. By June 2024, it had crossed $3 trillion. By the end of 2025, it was above $4.5 trillion. That's a roughly 12x increase in under three years.",
@@ -1263,7 +1264,7 @@ const articlesData = [
       "Sources: NVIDIA SEC Filings FY2025 (sec.gov), NVIDIA FY2025 Full Year Revenue $130.5B (nvidianews.nvidia.com), MacroTrends NVIDIA Market Cap Historical Data, S&P Global Market Intelligence"
     ] },
   { tag: "CASE STUDY", tagColor: C.gold, date: "Dec 2025", read: "9 min",
-    img: "/articles/working-capital.jpg", title: "How We Unlocked $12M in Trapped Cash That Nobody Knew Was There",
+    img: `${BASE}articles/working-capital.jpg`, title: "How We Unlocked $12M in Trapped Cash That Nobody Knew Was There",
     preview: "A profitable, growing company kept drawing on its revolver. Nobody could explain where the cash was going. I built a 13-week forecast and found the answer in working capital.",
     body: [
       "This one started with a CFO asking a question that should have had a simple answer: \"We're profitable. We're growing. Why do we keep drawing on our revolver?\"",
@@ -1278,7 +1279,7 @@ const articlesData = [
       "Tools used: Excel (13-week cash flow model, working capital bridge), SQL (AR aging extraction), Power BI (real-time treasury dashboard)"
     ] },
   { tag: "MARKET VIEW", tagColor: C.green, date: "Jan 2026", read: "6 min",
-    img: "/articles/ai-capex.jpg", title: "The AI CapEx Boom: Will Big Tech's $300B Bet Pay Off?",
+    img: `${BASE}articles/ai-capex.jpg`, title: "The AI CapEx Boom: Will Big Tech's $300B Bet Pay Off?",
     preview: "Amazon, Microsoft, Alphabet, and Meta are spending $300B+ on AI capex in 2025, accelerating to $665B in 2026. Here's whether the return math actually works.",
     body: [
       "Here's a number that should make every financial analyst sit up: Amazon, Microsoft, Alphabet, and Meta are expected to spend a combined $300 billion or more on capital expenditures in 2025, with the vast majority earmarked for AI infrastructure.",
@@ -1293,7 +1294,7 @@ const articlesData = [
       "Sources: Lucidity Insights (lucidityinsights.com), CNBC Oct 2025 & Feb 2026, Yahoo Finance Feb 2026, Bank of America credit strategy note, IO Fund (io-fund.com)"
     ] },
   { tag: "MARKET VIEW", tagColor: C.green, date: "Dec 2025", read: "7 min",
-    img: "/articles/fed-rates-ma.jpg", title: "Why the Fed's Rate Path Matters More Than You Think for M&A",
+    img: `${BASE}articles/fed-rates-ma.jpg`, title: "Why the Fed's Rate Path Matters More Than You Think for M&A",
     preview: "In a 4.5% rate environment, the same deal that worked at 11x EBITDA now only works at 8-9x. Here's how rate uncertainty is freezing deal pipelines and what to watch.",
     body: [
       "If you work in corporate finance or anywhere near deal-making, the single most important variable in your models right now isn't revenue growth or EBITDA margins. It's the cost of debt.",
@@ -1307,7 +1308,7 @@ const articlesData = [
       "Sources: Federal Reserve FOMC Statements (federalreserve.gov), PitchBook M&A Deal Activity Reports, S&P LCD Leveraged Loan Market Snapshot, Bain Global PE Report 2025, Deloitte M&A Trends 2025"
     ] },
   { tag: "TECHNICAL", tagColor: "#7a6f9b", date: "Nov 2025", read: "10 min",
-    img: "/articles/insurance-ipo.jpg", title: "Inside a $1.3B IPO: Due Diligence Lessons from the Insurance Sector",
+    img: `${BASE}articles/insurance-ipo.jpg`, title: "Inside a $1.3B IPO: Due Diligence Lessons from the Insurance Sector",
     preview: "When a specialty insurance company prices its IPO at $1.3B, the prospectus tells one story. The due diligence process tells another. Here's what the process actually looks like.",
     body: [
       "Insurance IPOs are uniquely challenging because the core product is a promise to pay money in the future. Unlike a SaaS company where revenue is recognized on a subscription schedule, an insurer's profitability depends on estimates that won't be validated for years.",
@@ -1322,7 +1323,7 @@ const articlesData = [
       "Sources: A.M. Best Company (ambest.com), Casualty Actuarial Society (casact.org), SEC Regulation S-K (sec.gov), Insurance Information Institute (iii.org)"
     ] },
   { tag: "MARKET VIEW", tagColor: C.green, date: "Jan 2026", read: "8 min",
-    img: "/articles/monte-carlo.jpg", title: "Monte Carlo vs. Straight-Line Forecasting: When to Use What",
+    img: `${BASE}articles/monte-carlo.jpg`, title: "Monte Carlo vs. Straight-Line Forecasting: When to Use What",
     preview: "Every corporate model uses straight-line forecasting. But there are specific scenarios where it systematically misleads you. Here's when Monte Carlo actually changes the decision.",
     body: [
       "Every financial model I've ever seen in a corporate setting uses some version of straight-line forecasting. Revenue grows at X% per year. Margins expand by 50 bps annually. You build the base case, upside, and downside, hand it to your boss, and move on.",
@@ -1497,7 +1498,7 @@ export default function Portfolio() {
 
       {sec("about", true, <div className="about-grid" style={{ display: "grid", gridTemplateColumns: "260px 1fr", gap: 44, alignItems: "start" }}>
         <div style={{ aspectRatio: "3/4", background: `linear-gradient(135deg, ${C.card}, ${C.bg})`, border: `1px solid ${C.border}`, overflow: "hidden", position: "relative" }}>
-          <img src="/harshin.jpg" alt="Harshin Vora" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+          <img src={`${BASE}harshin.jpg`} alt="Harshin Vora" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
 
         </div>
         <div>
@@ -1673,7 +1674,7 @@ export default function Portfolio() {
         {[
           { ic: <Mail size={13} />, l: "Email", v: "harshinvora2@gmail.com", h: "mailto:harshinvora2@gmail.com" },
           { ic: <ExternalLink size={13} />, l: "LinkedIn", v: "linkedin.com/in/harshin-vora", h: "https://www.linkedin.com/in/harshin-vora/" },
-          { ic: <Download size={13} />, l: "Resume", v: "Download PDF", h: "/Harshin_Vora_Resume.pdf" },
+          { ic: <Download size={13} />, l: "Resume", v: "Download PDF", h: `${BASE}Harshin_Vora_Resume.pdf` },
         ].map(lk => (
           <a key={lk.l} href={lk.h} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: `1px solid ${C.borderS}`, color: C.t1, textDecoration: "none" }}>
             <span style={{ color: C.gold }}>{lk.ic}</span>
