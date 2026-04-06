@@ -160,10 +160,10 @@ const PerfChart = () => {
   const [active, setActive] = useState({ NVDA: true, AAPL: true, MSFT: true, META: true, TSLA: true });
   const toggle = (t) => setActive(p => ({ ...p, [t]: !p[t] }));
   return (
-    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, padding: "18px 22px" }}>
+    <div className="card-hover" style={{ background: C.card, border: `1px solid ${C.borderS}`, padding: 22 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
         <div>
-          <div style={{ fontFamily: F.mono, fontSize: 9, color: C.t3, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 3 }}>06 — Trailing 12M Price Performance</div>
+          <div style={{ fontFamily: F.mono, fontSize: 9, color: C.t3, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 3 }}>04 — Trailing 12M Price Performance</div>
           <div style={{ fontFamily: F.mono, fontSize: 8, color: C.t3 }}>Indexed to 100 — Click tickers to toggle</div>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -232,7 +232,7 @@ const TeslaSens = () => {
       <div style={{ padding: "12px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Target size={12} style={{ color: C.gold }} />
-          <span style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.1em" }}>05 — TESLA SENSITIVITY ANALYSIS</span>
+          <span style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.1em" }}>06 — TESLA SENSITIVITY ANALYSIS</span>
         </div>
         <span style={{ fontFamily: F.mono, fontSize: 9, color: C.t3 }}>Implied Price/Share — Base: Rev $113B, 16% FCF Margin, 20% Growth</span>
       </div>
@@ -640,7 +640,7 @@ const CompTable = () => {
       <div style={{ padding: "12px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Target size={12} style={{ color: C.gold }} />
-          <span style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.1em" }}>04 — M&A COMPARABLE COMPANIES</span>
+          <span style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.1em" }}>05 — M&A COMPARABLE COMPANIES</span>
         </div>
         <span style={{ fontFamily: F.mono, fontSize: 9, color: C.t3 }}>Big Tech — LTM Multiples</span>
       </div>
