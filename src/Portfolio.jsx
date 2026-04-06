@@ -160,7 +160,7 @@ const PerfChart = () => {
   const [active, setActive] = useState({ NVDA: true, AAPL: true, MSFT: true, META: true, TSLA: true });
   const toggle = (t) => setActive(p => ({ ...p, [t]: !p[t] }));
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, padding: "18px 22px" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, padding: "18px 22px" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
         <div>
           <div style={{ fontFamily: F.mono, fontSize: 9, color: C.t3, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 3 }}>06 — Trailing 12M Price Performance</div>
@@ -228,7 +228,7 @@ const TeslaSens = () => {
   const baseW = 2, baseG = 2; // index for 11% WACC, 3.0% TGR
   const [h, setH] = useState(null);
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
       <div style={{ padding: "12px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Target size={12} style={{ color: C.gold }} />
@@ -301,7 +301,7 @@ const AISectorComp = () => {
   const data = view === "rev" ? aiChartData : indexedData;
 
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
       <div style={{ padding: "12px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Cpu size={12} style={{ color: C.gold }} />
@@ -423,7 +423,7 @@ const AccretionDilution = () => {
   const selStyle = { background: C.card, border: `1px solid ${C.goldDim}`, color: C.gold, padding: "4px 8px", fontSize: 10, fontFamily: F.mono, cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none", borderRadius: 0, paddingRight: 18, backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23c8a96e' d='M0 2l4 4 4-4z'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 6px center" };
 
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
       <div style={{ padding: "12px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <GitMerge size={12} style={{ color: C.gold }} />
@@ -540,7 +540,7 @@ const LBOModel = () => {
   const selStyle = { background: C.card, border: `1px solid ${C.goldDim}`, color: C.gold, padding: "4px 8px", fontSize: 10, fontFamily: F.mono, cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none", borderRadius: 0, paddingRight: 18, backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23c8a96e' d='M0 2l4 4 4-4z'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 6px center" };
 
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
       <div style={{ padding: "12px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <DollarSign size={12} style={{ color: C.gold }} />
@@ -636,7 +636,7 @@ const CompTable = () => {
   const thS = { padding: "9px 12px", fontFamily: F.mono, fontSize: 9, color: C.gold, background: "#0d0e12", textAlign: "center", borderBottom: "1px solid rgba(255,255,255,0.06)" };
   const tdS = (hl) => ({ padding: "9px 12px", fontFamily: F.mono, fontSize: 11, textAlign: "center", color: hl ? C.gold : C.t2, borderBottom: "1px solid rgba(255,255,255,0.03)", transition: "background 0.15s" });
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
       <div style={{ padding: "12px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Target size={12} style={{ color: C.gold }} />
@@ -759,7 +759,7 @@ const MonteCarloSim = () => {
   const selStyle = { background: C.card, border: `1px solid ${C.goldDim}`, color: C.gold, padding: "4px 8px", fontSize: 10, fontFamily: F.mono, cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none", borderRadius: 0, paddingRight: 18, backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23c8a96e' d='M0 2l4 4 4-4z'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 6px center" };
 
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <Activity size={11} style={{ color: C.gold }} />
@@ -897,7 +897,7 @@ const DCFCalc = () => {
   const selStyle = { background: C.card, border: `1px solid ${C.goldDim}`, color: C.gold, padding: "4px 8px", fontSize: 10, fontFamily: F.mono, cursor: "pointer", outline: "none", appearance: "none", WebkitAppearance: "none", borderRadius: 0, paddingRight: 18, backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3E%3Cpath fill='%23c8a96e' d='M0 2l4 4 4-4z'/%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 6px center" };
 
   return (
-    <div style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: `1px solid ${C.borderS}`, overflow: "hidden" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}><Calculator size={11} style={{ color: C.gold }} /><span style={{ fontFamily: F.mono, fontSize: 10, color: C.gold }}>DCF VALUATION</span></div>
         <select value={co} onChange={e => handleCo(e.target.value)} style={selStyle}>
@@ -1158,7 +1158,7 @@ const ExcelModel = () => {
   );
 
   return (
-    <div style={{ background: C.bg2, border: "1px solid " + C.borderS, overflow: "hidden" }}>
+    <div className="card-hover" style={{ background: C.bg2, border: "1px solid " + C.borderS, overflow: "hidden" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 18px", borderBottom: "1px solid rgba(200,169,110,0.08)", background: "#0d0e12" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}><FileSpreadsheet size={12} style={{ color: C.gold }} /><span style={{ fontFamily: F.mono, fontSize: 10, color: C.gold }}>CONSOLIDATED STATEMENT OF INCOME ($M)</span></div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
