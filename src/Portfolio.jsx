@@ -78,8 +78,19 @@ const Label = ({ icon, text }) => (
   </div>
 );
 
+const TextReveal = ({ children, delay = 0 }) => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setVisible(true); }, { threshold: 0.3 });
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+  return <span ref={ref} style={{ display: "inline-block", clipPath: visible ? "inset(0 0% 0 0)" : "inset(0 100% 0 0)", transition: `clip-path 0.8s cubic-bezier(0.22,1,0.36,1) ${delay}ms` }}>{children}</span>;
+};
+
 const Heading = ({ children }) => (
-  <h2 style={{ fontFamily: F.serif, fontSize: "clamp(1.6rem,3vw,2.6rem)", fontWeight: 300, lineHeight: 1.15, marginBottom: 8, color: C.t1 }}>{children}</h2>
+  <h2 style={{ fontFamily: F.serif, fontSize: "clamp(1.6rem,3vw,2.6rem)", fontWeight: 300, lineHeight: 1.15, marginBottom: 8, color: C.t1 }}><TextReveal>{children}</TextReveal></h2>
 );
 
 // Scroll-reveal wrapper
@@ -1272,8 +1283,8 @@ const ExcelModel = () => {
 const Ticker = () => {
   const items = ["NVIDIA DCF", "Meta FP&A", "Apple Capital Allocation", "M&A Comps", "Tesla Sensitivity", "Monte Carlo Simulation", "DCF Modeling", "Variance Analysis", "Python Automation", "Stochastic Forecasting"];
   return (
-    <div style={{ overflow: "hidden", borderTop: `1px solid ${C.borderS}`, borderBottom: `1px solid ${C.borderS}`, padding: "12px 0", background: C.bg }}>
-      <div style={{ display: "flex", width: "max-content", animation: "tick 30s linear infinite" }}>
+    <div className="ticker-wrap" style={{ overflow: "hidden", borderTop: `1px solid ${C.borderS}`, borderBottom: `1px solid ${C.borderS}`, padding: "12px 0", background: C.bg }}>
+      <div className="ticker-inner" style={{ display: "flex", width: "max-content", animation: "tick 30s linear infinite" }}>
         {[...items, ...items].map((t, i) => <span key={i} style={{ padding: "0 1.8rem", fontFamily: F.mono, fontSize: 10, color: C.t3, letterSpacing: "0.1em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{t} <span style={{ color: C.gold, marginLeft: 6 }}>●</span></span>)}
       </div>
     </div>
@@ -1459,10 +1470,12 @@ export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [loaded, setLoaded] = useState(false);
+  const [parallax, setParallax] = useState(0);
   useEffect(() => { const t = setTimeout(() => setLoaded(true), 1400); return () => clearTimeout(t); }, []);
   useEffect(() => {
     const h = () => {
       setScrolled(window.scrollY > 40);
+      setParallax(window.scrollY * 0.3);
       const docH = document.documentElement.scrollHeight - window.innerHeight;
       setScrollPct(docH > 0 ? (window.scrollY / docH) * 100 : 0);
       for (const s of ["contact", "articles", "skills", "interactive", "projects", "experience", "about", "hero"]) {
@@ -1495,6 +1508,14 @@ export default function Portfolio() {
         .loader{position:fixed;inset:0;z-index:9999;background:#0a0b0d;display:flex;align-items:center;justify-content:center;transition:opacity 0.6s,visibility 0.6s}
         .loader.done{opacity:0;visibility:hidden;pointer-events:none}
         .loader-text{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:${C.gold};opacity:0;animation:fadeIn 0.6s 0.2s forwards}
+        @keyframes dotPulse{0%{box-shadow:0 0 0 0 rgba(200,169,110,0.4)}70%{box-shadow:0 0 0 8px rgba(200,169,110,0)}100%{box-shadow:0 0 0 0 rgba(200,169,110,0)}}
+        .timeline-dot{transition:all 0.3s}.timeline-dot:hover{background:${C.gold} !important;animation:dotPulse 1s ease-out}
+        .ticker-wrap:hover .ticker-inner{animation-play-state:paused}
+        .contact-row{transition:all 0.3s cubic-bezier(0.22,1,0.36,1)}
+        .contact-row:hover{padding-left:8px;border-color:rgba(200,169,110,0.25) !important}
+        .contact-row:hover .contact-arrow{opacity:1;transform:translateX(0)}
+        .contact-arrow{opacity:0.3;transform:translateX(-8px);transition:all 0.3s cubic-bezier(0.22,1,0.36,1)}
+        html{scroll-padding-top:80px}
         @media(max-width:768px){
           nav{padding:10px 16px !important}
           .nav-links{display:none !important}
@@ -1532,7 +1553,7 @@ export default function Portfolio() {
       </div>}
 
       <section id="hero" onMouseMove={e => setMouse({ x: e.clientX, y: e.clientY })} style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "90px 26px 50px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", animation: "gridSlide 20s linear infinite", maskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(200,169,110,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,169,110,0.03) 1px, transparent 1px)", backgroundSize: "60px 60px", animation: "gridSlide 20s linear infinite", maskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", WebkitMaskImage: "radial-gradient(ellipse 65% 55% at 50% 40%, black 20%, transparent 70%)", transform: `translateY(${parallax}px)`, willChange: "transform" }} />
         <div style={{ position: "absolute", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%)", left: mouse.x - 200, top: mouse.y - 200, pointerEvents: "none", transition: "left 0.3s ease-out, top 0.3s ease-out", zIndex: 1 }} />
         <div style={{ position: "relative", zIndex: 2, maxWidth: 820 }}>
           <div style={{ fontFamily: F.mono, fontSize: 11, color: C.gold, letterSpacing: "0.22em", textTransform: "uppercase", marginBottom: 18, animation: "fadeIn 0.7s 0.2s both", display: "flex", alignItems: "center", gap: 10 }}>
@@ -1583,7 +1604,7 @@ export default function Portfolio() {
             { d: "Jan 2020 — Jun 2021", r: "Associate CA", co: "G. M. Kapadia & Co.", loc: "Mumbai, India", desc: "Led transaction due diligence for $1.3B insurance IPO. Executed statutory audits for 7 clients ($50M–$100M revenue). Evaluated $150M+ loan portfolio and recommended $18M in NPA reclassifications. Automated reporting via Power BI, reducing manual processes by 50%." },
           ].map((e, i) => (
             <div key={i} style={{ marginBottom: 30, position: "relative" }}>
-              <div style={{ position: "absolute", left: -34, top: 5, width: 8, height: 8, border: `1.5px solid ${C.gold}`, background: C.bg, borderRadius: "50%" }} />
+              <div className="timeline-dot" style={{ position: "absolute", left: -34, top: 5, width: 8, height: 8, border: `1.5px solid ${C.gold}`, background: C.bg, borderRadius: "50%" }} />
               <div style={{ fontFamily: F.mono, fontSize: 10, color: C.t3, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 5 }}>{e.d}</div>
               <div style={{ fontFamily: F.serif, fontSize: 20, fontWeight: 400, marginBottom: 3 }}>{e.r}</div>
               <div style={{ color: C.gold, fontSize: 13, fontWeight: 500, marginBottom: 3 }}>{e.co}</div>
@@ -1734,11 +1755,11 @@ export default function Portfolio() {
           { ic: <ExternalLink size={13} />, l: "LinkedIn", v: "linkedin.com/in/harshin-vora", h: "https://www.linkedin.com/in/harshin-vora/" },
           { ic: <Download size={13} />, l: "Resume", v: "Download PDF", h: `${BASE}Harshin_Vora_Resume.pdf` },
         ].map(lk => (
-          <a key={lk.l} href={lk.h} target="_blank" rel="noopener noreferrer" style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: `1px solid ${C.borderS}`, color: C.t1, textDecoration: "none" }}>
+          <a key={lk.l} href={lk.h} target="_blank" rel="noopener noreferrer" className="contact-row" style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: `1px solid ${C.borderS}`, color: C.t1, textDecoration: "none" }}>
             <span style={{ color: C.gold }}>{lk.ic}</span>
             <span style={{ fontFamily: F.mono, fontSize: 9, color: C.t3, letterSpacing: "0.12em", textTransform: "uppercase", minWidth: 60 }}>{lk.l}</span>
             <span style={{ fontSize: 14 }}>{lk.v}</span>
-            <ArrowUpRight size={13} style={{ marginLeft: "auto", color: C.t3 }} />
+            <ArrowUpRight size={13} className="contact-arrow" style={{ marginLeft: "auto", color: C.t3 }} />
           </a>
         ))}
       </div>)}
