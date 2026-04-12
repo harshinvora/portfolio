@@ -10,14 +10,15 @@
     "start": "node server/index.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist"
+    "deploy": "GITHUB_PAGES=true vite build && gh-pages -d dist"
   },
   "dependencies": {
     "express": "^5.2.1",
     "lucide-react": "^1.7.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "recharts": "^3.8.1"
+    "recharts": "^3.8.1",
+    "tslib": "^2.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
