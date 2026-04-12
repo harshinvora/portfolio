@@ -13,6 +13,7 @@
     "deploy": "GITHUB_PAGES=true vite build && gh-pages -d dist"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "express": "^5.2.1",
     "lucide-react": "^1.7.0",
     "react": "^19.2.4",
