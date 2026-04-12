@@ -1690,6 +1690,25 @@ export default function Portfolio() {
         <div style={{ marginTop: 14 }}><LBOModel /></div>
         <div style={{ marginTop: 14 }}><AccretionDilution /></div>
         <div style={{ marginTop: 14 }}><AISectorComp /></div>
+        <Reveal delay={200}>
+          <a href="https://one0k-analyzer-8nyp.onrender.com" target="_blank" rel="noopener noreferrer" className="card-hover" style={{ display: "block", marginTop: 14, background: `linear-gradient(135deg, ${C.card}, ${C.bg2})`, border: `1px solid ${C.border}`, padding: 28, textDecoration: "none", color: C.t1 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Zap size={14} style={{ color: C.gold }} />
+                <span style={{ fontFamily: F.mono, fontSize: 10, color: C.gold, letterSpacing: "0.12em", textTransform: "uppercase" }}>10 — AI-Powered 10-K Analyzer</span>
+              </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ fontFamily: F.mono, fontSize: 9, color: C.green, padding: "2px 8px", border: "1px solid rgba(91,138,114,0.3)", background: "rgba(91,138,114,0.08)" }}>LIVE TOOL</span>
+                <ArrowUpRight size={14} style={{ color: C.gold }} />
+              </div>
+            </div>
+            <h3 style={{ fontFamily: F.serif, fontSize: 22, fontWeight: 300, marginBottom: 8 }}>Upload a 10-K. Get instant AI analysis.</h3>
+            <p style={{ fontSize: 13, color: C.t2, lineHeight: 1.7, maxWidth: 600, marginBottom: 14 }}>Drag-and-drop SEC filings, pick focus areas (revenue, risks, debt, R&D), and stream structured financial analysis powered by Claude — built with React, Express, and the Anthropic API.</p>
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {["React", "Express", "Claude API", "Streaming SSE", "PDF Parsing"].map(t => <span key={t} style={{ padding: "4px 10px", border: `1px solid ${C.borderS}`, fontSize: 9, color: C.t3, fontFamily: F.mono, letterSpacing: "0.06em", textTransform: "uppercase" }}>{t}</span>)}
+            </div>
+          </a>
+        </Reveal>
       </>)}
 
       {sec("interactive", false, <>
