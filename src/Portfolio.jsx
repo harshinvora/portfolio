@@ -10,6 +10,7 @@ import {
   ExternalLink, Download, Zap, Target, BookOpen, ArrowUpRight, Activity, DollarSign, GitMerge, Cpu, Menu, X
 } from "lucide-react";
 import { useSupabaseData } from "./useSupabaseData.js";
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 const BASE = import.meta.env.BASE_URL;
 const C = {
@@ -1715,6 +1716,7 @@ export default function Portfolio() {
         <span>© {new Date().getFullYear()} Harshin Vora</span>
         <span>Data sourced from SEC 10-K filings</span>
       </footer>
+      <SpeedInsights />
     </div>
   );
 }
